@@ -1,5 +1,13 @@
 import Image from 'next/image'
 import { FaAngleLeft, FaBars } from 'react-icons/fa';
+import { Questrial } from 'next/font/google'
+
+
+
+const questrial = Questrial({
+  weight: '400',
+  subsets: ['latin'],
+})
 
 
 export default function Home() {
@@ -49,8 +57,10 @@ export default function Home() {
               className="w-56 dark:invert rounded-lg shadow-lg border-2 border-black"
             />
           </div>
-          <h1 className='font-bold text-3xl'> Despacito </h1>
-          <p> Perfume </p>
+          <div className={`${questrial.className} mt-5`}>
+            <h1 className='font-bold text-2xl'> Despacito </h1>
+            <p> Perfume </p>
+          </div>
         </div>
       </div>
     </main>
