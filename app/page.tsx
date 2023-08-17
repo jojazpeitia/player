@@ -4,7 +4,7 @@ import Image from 'next/image'
 import { FaBackward, FaForward, FaPlay, FaPause, FaHome } from 'react-icons/fa';
 import { Questrial } from 'next/font/google'
 import { useState, useEffect } from 'react'
-import { useAnimation, motion } from "framer-motion"
+import { useAnimation, motion, easeIn } from "framer-motion"
 
 const questrial = Questrial({
   weight: '400',
@@ -20,6 +20,7 @@ export default function Home() {
   const [isPlaying, setIsPlaying] = useState(false);
   const [sliderPosition, setSliderPosition] = useState(0);
   const [gifSource, setGifSource] = useState(gifSources.paused);
+  const [isRotating, setIsRotating] = useState(false);
 
   const handlePlayClick = () => {
     const audioElement = document.getElementById('audio-element') as HTMLAudioElement;
@@ -34,6 +35,7 @@ export default function Home() {
       }
 
       setIsPlaying(!isPlaying);
+      setIsRotating(true);
     }
   };
 
@@ -81,33 +83,34 @@ export default function Home() {
     }
   };
 
-  const rotationVariants = {
-    playing: {
-      rotate: [0,360],
-      transition: {
-        duration: 10,
-        repeat: Infinity, // Adding repeat property for infinite repetition
-        ease: "linear",
-      },
-    },
-    paused: {
-      rotate: 0,
-      transition: {
-        duration: Infinity
-,        ease: "linear"
-      },
-    },
-  };
+const rotateVariants = {
+  rotate: isRotating ? 360 : 0,
+  transition: {
+    duration: 120,
+    repeat: Infinity,
+    ease: 'linear',
+  },
+};
 
   return (
-    <main className=" flex min-h-screen flex-col items-center justify-between p-24">
+    <main className=" flex min-h-screen flex-col items-center justify-center p-24">
       {/* main content */}
       <motion.div 
         className="mb-32 grid text-center"
-        animate={isPlaying ? "playing" : "paused"}
-        variants={rotationVariants}
+        animate={rotateVariants}
       >
-        <div className='rounded-lg bg-pink-100 w-96 p-6 text-center shadow-inner'>
+        <motion.div 
+        className='rounded-lg bg-pink-100 w-96 p-6 text-center shadow-inner'
+        initial={{opacity: 0, x:-100}} 
+        animate={{opacity: 1, x:0, 
+          transition: 
+          {
+            duration: 2,
+            easeInOut: 'linear'
+          }
+        }} 
+        exit={{opacity: 0, x:-100}}
+        >
           <div className="mt-10 flex justify-center h-48">
             <Image
               src={gifSource}
@@ -143,26 +146,26 @@ export default function Home() {
             <motion.div 
               className="w-16 h-16 m-5 bg-white inline-flex items-center justify-center rounded-full shadow-lg cursor-pointer"
               onClick={handleBackwardClick}
-              whileTap={{ scale: 0.87 }}
+              whileTap={{ scale: 0.70 }}
             >
               <FaBackward className="fill-pink-400"/>
             </motion.div>
             <motion.div 
               className="w-16 h-16 m-5 bg-white inline-flex items-center justify-center rounded-full shadow-lg cursor-pointer" 
               onClick={handlePlayClick}
-              whileTap={{ scale: 0.87 }}
+              whileTap={{ scale: 0.70 }}
             >
                 {isPlaying ? <FaPause className="fill-pink-400" /> : <FaPlay className="fill-pink-400" />}
             </motion.div>
             <motion.div 
               className="w-16 h-16 m-5 bg-white inline-flex items-center justify-center rounded-full shadow-lg cursor-pointer"
               onClick={handleForwardClick}
-              whileTap={{ scale: 0.87 }}
+              whileTap={{ scale: 0.70 }}
             >
               <FaForward className="fill-pink-400"/>
             </motion.div>
           </div>
-        </div>
+        </motion.div>
       </motion.div>
 
        
