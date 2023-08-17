@@ -101,7 +101,7 @@ export default function Home() {
   }
 
   return (
-    <main className="bg-gradient-to-b from-white to-gray-50 flex min-h-screen flex-col items-center justify-center p-24">
+    <main className="flex min-h-screen flex-col items-center justify-center p-24">
       {/* main content */}
       <motion.div 
         className="mb-32 grid text-center"
@@ -179,6 +179,13 @@ export default function Home() {
           </div>
         </motion.div>
       </motion.div>
+      <footer className="absolute bottom-0 w-full shadow-lg">
+        <div className="container flex justify-center mx-auto">
+            <div className="flex items-center py-3 text-center text-gray-400"> {/* Added flex and items-center */}
+                <p className={`${questrial.className} text-sm`}>© eeoh 2023</p> {/* Added margin-right */}
+            </div>
+        </div>
+      </footer>
     </main>
   )
 }
