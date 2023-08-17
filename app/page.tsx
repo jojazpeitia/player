@@ -1,16 +1,77 @@
+'use client'
+
 import Image from 'next/image'
-import { FaAngleLeft, FaBars, FaBackward, FaForward, FaPlay, } from 'react-icons/fa';
+import { FaAngleLeft, FaBars, FaBackward, FaForward, FaPlay, FaPause } from 'react-icons/fa';
 import { Questrial } from 'next/font/google'
-
-
+import { useState, useEffect } from 'react'
 
 const questrial = Questrial({
   weight: '400',
   subsets: ['latin'],
 })
 
-
 export default function Home() {
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [sliderPosition, setSliderPosition] = useState(0);
+
+  const handlePlayClick = () => {
+    const audioElement = document.getElementById('audio-element') as HTMLAudioElement;
+
+    if (audioElement) {
+      if (!isPlaying) {
+        audioElement.play();
+      } else {
+        audioElement.pause();
+      }
+
+      setIsPlaying(!isPlaying);
+    }
+  };
+
+  const handleBackwardClick = () => {
+    const audioElement = document.getElementById('audio-element') as HTMLAudioElement;
+  
+    if (audioElement) {
+      audioElement.currentTime -= 10; // Go back 10 seconds
+    }
+  };
+
+  const handleForwardClick = () => {
+    const audioElement = document.getElementById('audio-element') as HTMLAudioElement;
+  
+    if (audioElement) {
+      audioElement.currentTime += 10; // Go forward 10 seconds
+    }
+  };
+
+  useEffect(() => {
+    const audioElement = document.getElementById('audio-element') as HTMLAudioElement;
+  
+    if (audioElement) {
+      const updateTime = () => {
+        const newPosition = (audioElement.currentTime / audioElement.duration) * 100;
+        setSliderPosition(newPosition);
+      };
+      
+      audioElement.addEventListener('timeupdate', updateTime);
+      
+      return () => {
+        audioElement.removeEventListener('timeupdate', updateTime);
+      };
+    }
+  }, []);
+
+  const handleSliderChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const audioElement = document.getElementById('audio-element') as HTMLAudioElement;
+    
+    if (audioElement) {
+      const newPosition = parseFloat(event.target.value);
+      const newTime = (newPosition / 100) * audioElement.duration;
+      audioElement.currentTime = newTime;
+      setSliderPosition(newPosition);
+    }
+  };
+
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
       <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex">
@@ -66,26 +127,40 @@ export default function Home() {
           </div>
           {/* Player */}
           <div className="flex justify-center">
-            <audio controls>
+            <audio 
+              // controls 
+              id="audio-element"
+            >
               <source src="WhatsApp Audio 2023-08-15 at 8.31.48 AM.mpeg" type='audio/mpeg'/>
             </audio>
           </div>
-          <input type='range' value="0" id="progress"/> 
+          <input 
+            type='range' 
+            id="progress"
+            value={sliderPosition}
+            onInput={handleSliderChange}
+            /> 
           {/* Controls */}
           <div className="flex justify-center items-center">
-            <div className="w-16 h-16 m-5 bg-white inline-flex items-center justify-center rounded-full shadow-lg cursor-pointer">
+            <div 
+              className="w-16 h-16 m-5 bg-white inline-flex items-center justify-center rounded-full shadow-lg cursor-pointer"
+              onClick={handleBackwardClick}
+            >
               <FaBackward className="fill-pink-400"/>
             </div>
-            <div className="w-16 h-16 m-5 bg-white inline-flex items-center justify-center rounded-full shadow-lg cursor-pointer">
-              <FaPlay className="fill-pink-400"/>
+            <div 
+              className="w-16 h-16 m-5 bg-white inline-flex items-center justify-center rounded-full shadow-lg cursor-pointer" 
+              onClick={handlePlayClick}
+            >
+                {isPlaying ? <FaPause className="fill-pink-400" /> : <FaPlay className="fill-pink-400" />}
             </div>
-            <div className="w-16 h-16 m-5 bg-white inline-flex items-center justify-center rounded-full shadow-lg cursor-pointer">
+            <div 
+              className="w-16 h-16 m-5 bg-white inline-flex items-center justify-center rounded-full shadow-lg cursor-pointer"
+              onClick={handleForwardClick}
+            >
               <FaForward className="fill-pink-400"/>
             </div>
           </div>
-          
-
-
         </div>
       </div>
     </main>
