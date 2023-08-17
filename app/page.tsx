@@ -182,8 +182,8 @@ export default function Home() {
       </motion.div>
       <footer className="absolute bottom-0 w-full">
         <div className="container flex justify-center mx-auto">
-            <div className="flex items-center py-3 text-center text-green-100"> {/* Added flex and items-center */}
-                <p className={`${questrial.className} text-sm`}>© eeoh 2023</p> {/* Added margin-right */}
+            <div className="flex items-center py-3 text-center text-green-50 "> {/* Added flex and items-center */}
+                <p className={`${questrial.className} text-sm font-bold`}>© eeoh 2023</p> {/* Added margin-right */}
             </div>
         </div>
       </footer>

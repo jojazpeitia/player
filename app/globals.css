@@ -23,8 +23,22 @@
 }
 
 .bg-image {
-  background-image: url('/background1.jpg');
-  background-size: cover;
+  background-image: url('/background2.jpg');
+  background-size: auto;
   background-position: center;
-  filter: blur(40px); 
+  filter: blur(30px); 
+  scale: 2;
+  background-attachment: fixed;
+
+  /* Animation properties */
+  animation: slideBackground 30s linear infinite;
+}
+
+@keyframes slideBackground {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
