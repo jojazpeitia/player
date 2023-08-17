@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import { FaAngleLeft, FaBars } from 'react-icons/fa';
+import { FaAngleLeft, FaBars, FaBackward, FaForward, FaPlay, } from 'react-icons/fa';
 import { Questrial } from 'next/font/google'
 
 
@@ -39,6 +39,7 @@ export default function Home() {
       {/* main content */}
       <div className="mb-32 grid text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left">
         <div className='bg-pink-100 w-96 p-6 text-center shadow-lg'>
+          {/* Icons */}
           <nav className="flex items-center justify-between mb-8">
             <div className="bg-white flex items-center justify-center w-10 h-10 rounded-3xl leading-10 shadow-lg">
               <FaAngleLeft className="fill-pink-400 w-5 h-5"/>
@@ -47,6 +48,7 @@ export default function Home() {
               <FaBars className="fill-pink-400 w-5 h-5"/>
             </div>
           </nav>
+          {/* Image */}
           <div className="flex justify-center">
             <Image
               src="/468-thumbnail.png"
@@ -57,10 +59,33 @@ export default function Home() {
               className="w-56 dark:invert rounded-lg shadow-lg border-2 border-black"
             />
           </div>
+          {/* Song Info */}
           <div className={`${questrial.className} mt-5`}>
-            <h1 className='font-bold text-2xl'> Despacito </h1>
-            <p> Perfume </p>
+            <h1 className='font-semibold text-xl'> Despacito </h1>
+            <p className='text-sm'> Perfume </p>
           </div>
+          {/* Player */}
+          <div className="flex justify-center">
+            <audio controls>
+              <source src="WhatsApp Audio 2023-08-15 at 8.31.48 AM.mpeg" type='audio/mpeg'/>
+            </audio>
+          </div>
+          <input type='range' value="0" id="progress"/> 
+          {/* Controls */}
+          <div className="flex justify-center items-center">
+            <div className="w-16 h-16 m-5 bg-white inline-flex items-center justify-center rounded-full shadow-lg cursor-pointer">
+              <FaBackward className="fill-pink-400"/>
+            </div>
+            <div className="w-16 h-16 m-5 bg-white inline-flex items-center justify-center rounded-full shadow-lg cursor-pointer">
+              <FaPlay className="fill-pink-400"/>
+            </div>
+            <div className="w-16 h-16 m-5 bg-white inline-flex items-center justify-center rounded-full shadow-lg cursor-pointer">
+              <FaForward className="fill-pink-400"/>
+            </div>
+          </div>
+          
+
+
         </div>
       </div>
     </main>
