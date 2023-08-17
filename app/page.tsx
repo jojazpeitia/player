@@ -21,6 +21,7 @@ export default function Home() {
   const [sliderPosition, setSliderPosition] = useState(0);
   const [gifSource, setGifSource] = useState(gifSources.paused);
   const [isRotating, setIsRotating] = useState(false);
+  const [currentTime, setCurrentTime] = useState(0);
 
   const handlePlayClick = () => {
     const audioElement = document.getElementById('audio-element') as HTMLAudioElement;
@@ -62,6 +63,7 @@ export default function Home() {
       const updateTime = () => {
         const newPosition = (audioElement.currentTime / audioElement.duration) * 100;
         setSliderPosition(newPosition);
+        setCurrentTime(audioElement.currentTime);
       };
       
       audioElement.addEventListener('timeupdate', updateTime);
@@ -83,17 +85,23 @@ export default function Home() {
     }
   };
 
-const rotateVariants = {
-  rotate: isRotating ? 360 : 0,
-  transition: {
-    duration: 120,
-    repeat: Infinity,
-    ease: 'linear',
-  },
-};
+  const rotateVariants = {
+    rotate: isRotating ? 360 : 0,
+    transition: {
+      duration: 60,
+      repeat: Infinity,
+      ease: 'linear',
+    },
+  };
+
+  function formatTime(timeInSeconds: number) {
+    const minutes = Math.floor(timeInSeconds / 60);
+    const seconds = Math.floor(timeInSeconds % 60);
+    return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+  }
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center p-24">
+    <main className="bg-gradient-to-b from-white to-gray-50 flex min-h-screen flex-col items-center justify-center p-24">
       {/* main content */}
       <motion.div 
         className="mb-32 grid text-center"
@@ -135,12 +143,16 @@ const rotateVariants = {
               <source src="WhatsApp Audio 2023-08-15 at 8.31.48 AM.mpeg" type='audio/mpeg'/>
             </audio>
           </div>
-          <input 
-            type='range' 
-            id="progress"
-            value={sliderPosition}
-            onInput={handleSliderChange}
-            /> 
+          <div className='flex items-center'>
+          <p className={`${questrial.className} text-sm`}> {formatTime(currentTime)}&nbsp;</p>
+            <input 
+              type='range' 
+              id="progress"
+              value={sliderPosition}
+              onInput={handleSliderChange}
+              /> 
+          </div>
+
           {/* Controls */}
           <div className="flex justify-center items-center">
             <motion.div 
@@ -167,41 +179,6 @@ const rotateVariants = {
           </div>
         </motion.div>
       </motion.div>
-
-       
-      {/* <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:h-auto lg:w-auto lg:bg-none">
-
-          <div className={`${questrial.className} mt-5`}>
-            <a
-              className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-              href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              By{' '}
-              <Image
-                src="/joja.svg"
-                alt="joja"
-                className="dark:invert"
-                width={60}
-                height={24}
-                priority
-              />
-            </a>
-          </div>
-        </div> */}
-
-        {/* <div className={`${questrial.className} flex flex-row items-center space-x-2`}>
-          <h1>by</h1>
-          <Image
-                src="/joja.svg"
-                alt="joja"
-                className="dark:invert"
-                width={50}
-                height={24}
-                priority
-          />
-        </div> */}
     </main>
   )
 }
