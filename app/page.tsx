@@ -101,14 +101,15 @@ export default function Home() {
   }
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center p-24">
+    <main className=" flex min-h-screen flex-col items-center justify-center p-24">
+       <div className="bg-image absolute inset-0 z-[-1]"/>
       {/* main content */}
       <motion.div 
         className="mb-32 grid text-center"
         animate={rotateVariants}
       >
         <motion.div 
-        className='rounded-lg bg-pink-100 w-96 p-6 text-center shadow-inner'
+        className='rounded-sm bg-pink-100 w-96 p-6 text-center shadow-xl'
         initial={{opacity: 0, x:-100}} 
         animate={{opacity: 1, x:0, 
           transition: 
@@ -156,21 +157,21 @@ export default function Home() {
           {/* Controls */}
           <div className="flex justify-center items-center">
             <motion.div 
-              className="w-16 h-16 m-5 bg-white inline-flex items-center justify-center rounded-full shadow-lg cursor-pointer"
+              className="w-16 h-16 m-5 hover:shadow-3xl bg-white inline-flex items-center justify-center rounded-full shadow-lg cursor-pointer"
               onClick={handleBackwardClick}
               whileTap={{ scale: 0.70 }}
             >
               <FaBackward className="fill-pink-400"/>
             </motion.div>
             <motion.div 
-              className="w-16 h-16 m-5 bg-white inline-flex items-center justify-center rounded-full shadow-lg cursor-pointer" 
+              className="w-16 h-16 m-5 bg-white hover:shadow-3xl inline-flex items-center justify-center rounded-full shadow-lg cursor-pointer" 
               onClick={handlePlayClick}
               whileTap={{ scale: 0.70 }}
             >
                 {isPlaying ? <FaPause className="fill-pink-400" /> : <FaPlay className="fill-pink-400" />}
             </motion.div>
             <motion.div 
-              className="w-16 h-16 m-5 bg-white inline-flex items-center justify-center rounded-full shadow-lg cursor-pointer"
+              className="w-16 h-16 m-5 hover:shadow-3xl bg-white inline-flex items-center justify-center rounded-full shadow-lg cursor-pointer"
               onClick={handleForwardClick}
               whileTap={{ scale: 0.70 }}
             >
@@ -181,7 +182,7 @@ export default function Home() {
       </motion.div>
       <footer className="absolute bottom-0 w-full">
         <div className="container flex justify-center mx-auto">
-            <div className="flex items-center py-3 text-center text-gray-400"> {/* Added flex and items-center */}
+            <div className="flex items-center py-3 text-center text-green-100"> {/* Added flex and items-center */}
                 <p className={`${questrial.className} text-sm`}>© eeoh 2023</p> {/* Added margin-right */}
             </div>
         </div>

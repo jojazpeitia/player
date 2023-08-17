@@ -21,3 +21,10 @@
   border: 8px solid #fff;
   box-shadow: 0 5px 5px rgba(255, 26, 26, 0.22);
 }
+
+.bg-image {
+  background-image: url('/background1.jpg');
+  background-size: cover;
+  background-position: center;
+  filter: blur(40px); 
+}
