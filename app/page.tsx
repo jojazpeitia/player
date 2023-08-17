@@ -93,7 +93,7 @@ const rotateVariants = {
 };
 
   return (
-    <main className=" flex min-h-screen flex-col items-center justify-center p-24">
+    <main className="flex min-h-screen flex-col items-center justify-center p-24">
       {/* main content */}
       <motion.div 
         className="mb-32 grid text-center"
