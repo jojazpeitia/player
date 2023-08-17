@@ -4,7 +4,7 @@ import Image from 'next/image'
 import { FaBackward, FaForward, FaPlay, FaPause, FaHome } from 'react-icons/fa';
 import { Questrial } from 'next/font/google'
 import { useState, useEffect } from 'react'
-import { motion } from "framer-motion"
+import { useAnimation, motion } from "framer-motion"
 
 const questrial = Questrial({
   weight: '400',
@@ -81,52 +81,41 @@ export default function Home() {
     }
   };
 
-  return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
+  const rotationVariants = {
+    playing: {
+      rotate: [0,360],
+      transition: {
+        duration: 10,
+        repeat: Infinity, // Adding repeat property for infinite repetition
+        ease: "linear",
+      },
+    },
+    paused: {
+      rotate: 0,
+      transition: {
+        duration: Infinity
+,        ease: "linear"
+      },
+    },
+  };
 
+  return (
+    <main className=" flex min-h-screen flex-col items-center justify-between p-24">
       {/* main content */}
       <motion.div 
-        className="mb-32 grid text-center "
-        initial={{opacity: 0, y:20}} 
-        animate={{
-          opacity: 1, y:0, 
-          // transition: {delay: 0.3}, 
-          rotate: 360, 
-          borderRadius: "100%" 
-        }} 
-        transition={{
-          duration: 1,
-          ease: "easeInOut",
-          times: [0, 0.2, 0.5, 0.8, 1],
-          repeatDelay: 1
-        }}
-        exit={{opacity: 0, y:20}}
-        >
+        className="mb-32 grid text-center"
+        animate={isPlaying ? "playing" : "paused"}
+        variants={rotationVariants}
+      >
         <div className='rounded-lg bg-pink-100 w-96 p-6 text-center shadow-inner'>
-          {/* Icons */}
-          {/* <nav className="flex items-center justify-between mb-8">
-            <motion.div 
-              className="bg-white flex items-center justify-center w-10 h-10 rounded-3xl leading-10 shadow-lg"
-              whileTap={{scale: 0.87}}
-            >
-              <FaHome className="fill-pink-400 w-5 h-5"/>
-            </motion.div>
-            <motion.div 
-              className="bg-white flex items-center justify-center w-10 h-10 rounded-3xl leading-10 shadow-lg"
-              whileTap={{scale: 0.87}}
-            >
-              <FaHorse className="fill-pink-400 w-5 h-5"/>
-            </motion.div>
-          </nav> */}
-          {/* Image */}
           <div className="mt-10 flex justify-center h-48">
             <Image
-                src={gifSource}
+              src={gifSource}
               alt="pic"
               width={274}
               height={222}
               priority
-              className="w-56 bg-green-100 dark:invert rounded-lg border-2 border-black shadow-lg"
+              className="w-56 bg-white dark:invert rounded-lg shadow-lg"
             />
           </div>
           {/* Song Info */}
